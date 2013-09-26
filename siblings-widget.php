@@ -1,8 +1,8 @@
 <?php
 
 /*
-Plugin Name: Page Siblings
-Plugin URI: https://github.com/mcguffin/page-siblings/
+Plugin Name: Page Siblings Widget
+Plugin URI: https://github.com/mcguffin/siblings-widget/
 Description: Widget showing a menu with all the siblings of the current selected page.
 Author: Jörn Lund
 Version: 0.0.1
