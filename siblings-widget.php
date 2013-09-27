@@ -5,7 +5,7 @@ Plugin Name: Page Siblings Widget
 Plugin URI: https://github.com/mcguffin/siblings-widget/
 Description: Widget showing a menu with all the siblings of the current selected page.
 Author: Jörn Lund
-Version: 0.0.1
+Version: 0.0.2
 Author URI: https://github.com/mcguffin/
 
 Text Domain: siblings
@@ -79,3 +79,39 @@ class Silings_Widget extends WP_Widget {
 add_action( 'widgets_init', function(){
      register_widget( 'Silings_Widget' );
 });
+
+
+
+
+
+
+function pagesiblings_children( $args ) {
+	// which page are we on.
+	global $post;
+	$old_post = $post;
+	
+	$children = get_posts( "post_type={$post->post_type}&post_parent={$post->ID}" );
+	$custom_query = new WP_Query( array(
+		'post_type' => 'page',
+		'post_parent' => $post->ID,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+	) );
+	ob_start();
+	if ( $custom_query->have_posts() ):
+	    while ( $custom_query->have_posts() ) :
+	    	$custom_query->the_post();
+	    	$post = $custom_query->post;
+//	    	var_dump($custom_query->post);
+	    	get_template_part( 'content', 'page' );
+		endwhile;
+	endif;
+	$post = $old_post;
+	wp_reset_query();
+	return ob_get_clean();
+}
+
+
+
+add_shortcode('children','pagesiblings_children');
+
