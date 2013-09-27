@@ -35,7 +35,7 @@ class Silings_Widget extends WP_Widget {
 			else if ( $show_branch == 'current' )
 				$parent_post = get_post( $post->post_parent );
 			
-			$func = create_function('$args','$args[\'child_of\'] = '.$parent_post->ID.';return $args;' );
+			$func = create_function('$args','$args[\'child_of\'] = '.$parent_post->ID.';$args[\'show_home\']=false;return $args;' );
 			
 			// exclude non-hierarchical pages as well
 			add_filter( 'wp_page_menu_args', $func );
