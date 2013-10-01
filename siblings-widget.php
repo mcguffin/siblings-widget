@@ -36,7 +36,7 @@ class Silings_Widget extends WP_Widget {
 			else if ( $show_branch == 'current' )
 				$parent_post = get_post( $post->post_parent );
 			
-			$func = create_function('$args','$args[\'child_of\'] = '.$parent_post->ID.';return $args;' );
+			$func = create_function('$args','$args[\'child_of\'] = '.$parent_post->ID.';$args[\'show_home\']=false;return $args;' );
 			
 			// exclude non-hierarchical pages as well
 			add_filter( 'wp_page_menu_args', $func );
@@ -87,3 +87,33 @@ function siblings_widget_init(){
 	load_plugin_textdomain( 'siblings' , false, dirname( plugin_basename( __FILE__ )) . '/lang');
 }
 add_action('init','siblings_widget_init');
+
+
+
+function pagesiblings_children( $args ) {
+	// which page are we on.
+	global $post;
+	$old_post = $post;
+	
+	$children = get_posts( "post_type={$post->post_type}&post_parent={$post->ID}" );
+	$custom_query = new WP_Query( array(
+		'post_type' => 'page',
+		'post_parent' => $post->ID,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+	) );
+	ob_start();
+	if ( $custom_query->have_posts() ):
+	    while ( $custom_query->have_posts() ) :
+	    	$custom_query->the_post();
+	    	$post = $custom_query->post;
+//	    	var_dump($custom_query->post);
+	    	get_template_part( 'content', 'page' );
+		endwhile;
+	endif;
+	$post = $old_post;
+	wp_reset_query();
+	return ob_get_clean();
+}
+
+add_shortcode('children','pagesiblings_children');
