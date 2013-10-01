@@ -5,7 +5,7 @@ Plugin Name: Page Siblings Widget
 Plugin URI: https://github.com/mcguffin/siblings-widget/
 Description: Widget showing a menu with all the siblings of the current selected page.
 Author: Jörn Lund
-Version: 0.0.1
+Version: 0.0.2
 Author URI: https://github.com/mcguffin/
 
 Text Domain: siblings
@@ -16,12 +16,13 @@ Domain Path: /lang/
 
 class Silings_Widget extends WP_Widget {
 	private $defaults = array(
+		'show_title'	=> true,
 		'show_branch'	=> 'top', // 'top' | 'current'
 		'depth'			=> 0, // flat. 
 	);
 	function Silings_Widget() {
-		$widget_ops = array('classname' => 'siblings_widget', 'description' => 'Shows siblings of the current selected page.');
-		parent::__construct('siblings_widget','Page Sibling' , $widget_ops);
+		$widget_ops = array('classname' => 'siblings_widget', 'description' => __('Shows siblings of the current selected page.','siblings'));
+		parent::__construct('siblings_widget',__('Page Sibling','siblings') , $widget_ops);
 	}
 	function widget( $args , $instance) {
 		extract( wp_parse_args( $args + $instance, $this->defaults ) );
@@ -53,7 +54,9 @@ class Silings_Widget extends WP_Widget {
 			);
 			// widget title
 			echo $before_widget;
-			?><h3 class="widget-title"><?php echo $parent_post->post_title ?></h3><?php
+			if ( $show_title ) {
+				?><h3 class="widget-title"><?php echo $parent_post->post_title ?></h3><?php
+			}
 			echo wp_page_menu( $args );
 			echo $after_widget;
 			remove_filter( 'wp_page_menu_args', $func );
@@ -79,3 +82,8 @@ class Silings_Widget extends WP_Widget {
 add_action( 'widgets_init', function(){
      register_widget( 'Silings_Widget' );
 });
+
+function siblings_widget_init(){
+	load_plugin_textdomain( 'siblings' , false, dirname( plugin_basename( __FILE__ )) . '/lang');
+}
+add_action('init','siblings_widget_init');

@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Page Siblings Widget v0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2013-10-01 14:40:19+0000\n"
+"Last-Translator: admin <joern@flyingletters.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: siblings-widget.php:0
+#@ siblings
+msgid "Page Siblings Widget"
+msgstr "Seiten-Nachbarn Widget"
+
+#. translators: plugin header field 'PluginURI'
+#: siblings-widget.php:0
+#@ siblings
+msgid "https://github.com/mcguffin/siblings-widget/"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: siblings-widget.php:0
+#@ siblings
+msgid "Widget showing a menu with all the siblings of the current selected page."
+msgstr "Ein Widget mit einem Menü des gegenwärtig ausgewählten Seitenbaums."
+
+#. translators: plugin header field 'Author'
+#: siblings-widget.php:0
+#@ siblings
+msgid "Jörn Lund"
+msgstr ""
+
+#. translators: plugin header field 'AuthorURI'
+#: siblings-widget.php:0
+#@ siblings
+msgid "https://github.com/mcguffin/"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: siblings-widget.php:0
+#@ siblings
+msgid "0.0.1"
+msgstr ""
+
+#: siblings-widget.php:24
+#@ siblings
+msgid "Shows siblings of the current selected page."
+msgstr "Zeigt ein Menü des gegenwärtig ausgewählten Seitenbaumes."
+
+#: siblings-widget.php:25
+#@ siblings
+msgid "Page Sibling"
+msgstr "Seiten Nachbarn"
+
