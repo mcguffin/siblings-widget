@@ -16,7 +16,8 @@ Domain Path: /lang/
 
 class Silings_Widget extends WP_Widget {
 	private $defaults = array(
-		'show_title'	=> true,
+		'title'			=> '',
+		'use_tree_title'	=> true,
 		'show_branch'	=> 'top', // 'top' | 'current'
 		'depth'			=> 0, // flat. 
 	);
@@ -27,7 +28,8 @@ class Silings_Widget extends WP_Widget {
 	function widget( $args , $instance) {
 		extract( wp_parse_args( $args + $instance, $this->defaults ) );
 		global $post;
-		if ( $post && ($post->post_parent xor $this->page_has_children($post->ID) ) ) {
+
+		if ( $post && ($post->post_parent or $this->page_has_children($post->ID) ) ) {
 			$parent_post = $post;
 			
 			// show branch
@@ -54,8 +56,9 @@ class Silings_Widget extends WP_Widget {
 			);
 			// widget title
 			echo $before_widget;
-			if ( $show_title ) {
-				?><h3 class="widget-title"><?php echo $parent_post->post_title ?></h3><?php
+			$title = $use_tree_title ? $parent_post->post_title : $title;
+			if ( $title ) {
+				?><h3 class="widget-title"><?php echo $title ?></h3><?php
 			}
 			echo wp_page_menu( $args );
 			echo $after_widget;
@@ -68,7 +71,21 @@ class Silings_Widget extends WP_Widget {
 	}
 	function form( $instance ) {
 		extract( wp_parse_args($instance, $this->defaults) );
-		
+		?><h3><?php _e('Widget Title','siblings') ?></h3><?php
+		?><p><?php
+			?><label>
+				<input type="radio" value="1" id="<?php echo $this->get_field_id( 'use_tree_title' ); ?>" name="<?php echo $this->get_field_name( 'use_tree_title' ); ?>" <?php checked( $use_tree_title, 1 );?>>
+				<?php _e( 'Use Tree name as Widget Title', 'siblings' ); ?>
+			</label><?php
+		?></p><?php
+		?><p><?php
+			?><label>
+				<input type="radio" value="0" id="<?php echo $this->get_field_id( 'use_tree_title' ); ?>" name="<?php echo $this->get_field_name( 'use_tree_title' ); ?>" <?php checked( $use_tree_title, 0 );?>>
+				<input type="text" name="<?php echo $this->get_field_name( 'title' ); ?>" id="<?php echo $this->get_field_id( 'title' ); ?>" value="<?php echo esc_attr($title) ?>" />
+			</label><?php
+			
+			
+		?></p><?php
 	}
 	private function page_has_children( $post_ID ) {
 		global $wpdb;
